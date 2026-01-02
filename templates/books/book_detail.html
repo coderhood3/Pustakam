@@ -1,0 +1,113 @@
+{% extends 'books/base.html' %}
+{% block content %}
+<div class="container py-8">
+    <!-- Breadcrumb -->
+    <nav class="text-sm text-muted mb-6 flex gap-2">
+        <a href="{% url 'home' %}">Home</a> /
+        <a href="{% url 'category_books' book.category.pk %}">{{ book.category.name }}</a> /
+        <span class="text-slate-900">{{ book.title }}</span>
+    </nav>
+
+    <div class="grid" style="grid-template-columns: 350px 1fr 300px; gap: 3rem;">
+
+        <!-- Col 1: Image -->
+        <div>
+            <div class="card p-2" style="border: none; box-shadow: none; background: var(--slate-100);">
+                <div class="product-detail-img">
+                    {% if book.image %}
+                    <img src="{{ book.image.url }}" alt="{{ book.title }}"
+                        style="width: 100%; border-radius: var(--radius-md);">
+                    {% else %}
+                    <div
+                        style="height:400px; background:#eee; display:flex; align-items:center; justify-content:center;">
+                        No Image</div>
+                    {% endif %}
+
+                    <!-- Gallery -->
+                    {% if book.images.all %}
+                    <div class="gallery-grid mt-4"
+                        style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;">
+                        {% for img in book.images.all %}
+                        <img src="{{ img.image.url }}" alt="Gallery Image"
+                            style="border:1px solid #ddd; cursor:pointer; border-radius: var(--radius-sm);"
+                            onclick="document.querySelector('.product-detail-img > img').src=this.src">
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Col 2: Details -->
+        <div>
+            <h1 class="text-3xl font-bold text-slate-900 mb-2">{{ book.title }}</h1>
+            <p class="text-lg text-muted mb-4">by <span class="text-primary font-medium">{{ book.author }}</span></p>
+
+            <div class="flex items-center gap-4 mb-6 text-sm">
+                <span class="bg-blue-50 text-blue-700 px-3 py-1 rounded-full font-bold">
+                    {{ book.condition }} Condition
+                </span>
+                <span class="text-muted"><i class="fa-solid fa-eye"></i> 15 people viewing</span>
+            </div>
+
+            <div class="border-t border-slate-200 py-6">
+                <h3 class="font-bold mb-3">Description</h3>
+                <p class="text-muted leading-relaxed mb-6">{{ book.description }}</p>
+
+                <h3 class="font-bold mb-3">Product Details</h3>
+                <ul class="text-sm text-muted grid grid-cols-2 gap-2">
+                    <li><strong>Category:</strong> {{ book.category.name }}</li>
+                    <li><strong>Seller:</strong> {{ book.seller.username }}</li>
+                    <li><strong>Uploaded:</strong> {{ book.created_at|date:"M d, Y" }}</li>
+                    <li><strong>Language:</strong> English</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Col 3: Buy Box -->
+        <div>
+            <div class="card p-6 sticky top-24" style="border: 1px solid var(--slate-200);">
+                <div class="text-3xl font-bold text-slate-900 mb-2">₹{{ book.price }}</div>
+                <div class="text-sm text-green-600 font-bold mb-6">
+                    <i class="fa-solid fa-check"></i> In Stock
+                </div>
+
+                <form action="{% url 'add_to_cart' book.pk %}" method="post" class="flex flex-col gap-3">
+                    {% csrf_token %}
+                    <button class="btn btn-primary w-100">Add to Cart</button>
+                    <a href="{% url 'add_to_wishlist' book.pk %}" class="btn btn-secondary w-100">
+                        <i class="fa-regular fa-heart"></i> Add to Wishlist
+                    </a>
+                </form>
+
+                <div class="mt-6 pt-6 border-t border-slate-100 text-xs text-muted">
+                    <div class="flex justify-between mb-2">
+                        <span>Ships from</span>
+                        <span class="font-bold text-slate-900">Pustakam Warehouse</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Sold by</span>
+                        <span class="font-bold text-slate-900">{{ book.seller.username }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<!-- Mobile Layout Adjustment -->
+<style>
+    @media(max-width: 1024px) {
+        .grid {
+            grid-template-columns: 1fr !important;
+        }
+
+        .sticky {
+            position: static !important;
+        }
+    }
+</style>
+{% endblock %}

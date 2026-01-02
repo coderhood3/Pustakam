@@ -1,0 +1,65 @@
+{% extends 'books/base.html' %}
+{% block content %}
+<div class="container py-8">
+    <div class="text-center mb-12">
+        <h1 class="text-3xl font-bold mb-2">Get in Touch</h1>
+        <p class="text-muted">We'd love to hear from you. Here's how you can reach us.</p>
+    </div>
+
+    <div class="grid grid-cols-3 gap-4 mb-12">
+        <div class="card p-6 text-center">
+            <div class="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-4 text-accent">
+                <i class="fa-solid fa-envelope"></i>
+            </div>
+            <h3 class="font-bold mb-2">Email Us</h3>
+            <p class="text-muted text-sm">support@pustakam.com</p>
+            <p class="text-muted text-sm">partners@pustakam.com</p>
+        </div>
+        <div class="card p-6 text-center">
+            <div class="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-4 text-accent">
+                <i class="fa-solid fa-phone"></i>
+            </div>
+            <h3 class="font-bold mb-2">Call Us</h3>
+            <p class="text-muted text-sm">+91 98765 43210</p>
+            <p class="text-muted text-sm">Mon-Fri, 9am - 6pm</p>
+        </div>
+        <div class="card p-6 text-center">
+            <div class="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-4 text-accent">
+                <i class="fa-solid fa-location-dot"></i>
+            </div>
+            <h3 class="font-bold mb-2">Visit Us</h3>
+            <p class="text-muted text-sm">123, Tech Park, Sector 5</p>
+            <p class="text-muted text-sm">Bangalore, India</p>
+        </div>
+    </div>
+
+    <div class="flex justify-center">
+        <div class="card p-8 w-full max-w-2xl">
+            <h2 class="text-xl font-bold mb-6">Send a Message</h2>
+            <form method="post">
+                {% csrf_token %}
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="form-control-group">
+                        <label class="text-sm text-muted mb-1 block">Full Name</label>
+                        <input type="text" name="name" class="form-control" placeholder="John Doe">
+                    </div>
+                    <div class="form-control-group">
+                        <label class="text-sm text-muted mb-1 block">Email Address</label>
+                        <input type="email" name="email" class="form-control" placeholder="john@example.com">
+                    </div>
+                </div>
+                <div class="form-control-group mt-4">
+                    <label class="text-sm text-muted mb-1 block">Subject</label>
+                    <input type="text" name="subject" class="form-control" placeholder="How can we help?">
+                </div>
+                <div class="form-control-group mt-4">
+                    <label class="text-sm text-muted mb-1 block">Message</label>
+                    <textarea name="message" rows="4" class="form-control"
+                        placeholder="Type your message here..."></textarea>
+                </div>
+                <button class="btn btn-primary w-100 mt-6">Send Message</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

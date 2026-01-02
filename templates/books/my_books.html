@@ -1,0 +1,15 @@
+{% extends 'books/base.html' %}
+{% block content %}
+<div class="container py-8">
+    <h1 class="text-2xl font-bold mb-6">My Uploaded Books</h1>
+    <div class="grid grid-cols-4">
+        {% for book in books %}
+        <div class="card p-4">
+            <h3 class="font-bold">{{ book.title }}</h3>
+            <p>₹{{ book.price }}</p>
+            <div class="mt-2 text-sm p-1 rounded bg-gray-50 text-center">{{ book.status }}</div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

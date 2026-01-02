@@ -1,0 +1,26 @@
+{% extends 'books/base.html' %}
+{% block content %}
+<div class="container py-8">
+    <h1 class="text-2xl font-bold mb-6">My Wishlist</h1>
+    <div class="grid grid-cols-4">
+        {% for book in wishlist.books.all %}
+        <a href="{% url 'book_detail' book.pk %}" class="card">
+            <div
+                style="height: 200px; background: var(--gray-100); display: flex; align-items: center; justify-content: center;">
+                {% if book.image %}
+                <img src="{{ book.image.url }}" alt="{{ book.title }}" style="max-height: 100%;">
+                {% else %}
+                <i class="fa-solid fa-book fa-2x"></i>
+                {% endif %}
+            </div>
+            <div class="p-4">
+                <h3 class="font-bold">{{ book.title }}</h3>
+                <p class="text-primary font-bold">₹{{ book.price }}</p>
+            </div>
+        </a>
+        {% empty %}
+        <p>Your wishlist is empty.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

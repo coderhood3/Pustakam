@@ -1,0 +1,34 @@
+{% extends 'books/base.html' %}
+{% block content %}
+<div class="container py-8">
+    <h1 class="text-2xl font-bold mb-6">Shopping Cart</h1>
+    {% if cart.items.count > 0 %}
+    <div class="grid grid-cols-3">
+        <div class="flex flex-col gap-4" style="grid-column: span 2;">
+            {% for item in cart.items.all %}
+            <div class="card p-4 flex justify-between items-center">
+                <div>
+                    <h3 class="font-bold">{{ item.book.title }}</h3>
+                    <p>Qty: {{ item.quantity }}</p>
+                </div>
+                <div class="text-right">
+                    <div class="font-bold">₹{{ item.total_price }}</div>
+                    <a href="{% url 'remove_from_cart' item.id %}" class="text-error text-sm">Remove</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="card p-6 h-fit">
+            <h3 class="font-bold text-xl mb-4">Summary</h3>
+            <div class="flex justify-between font-bold text-xl mb-6">
+                <span>Total</span>
+                <span>₹{{ cart.total_price }}</span>
+            </div>
+            <a href="{% url 'checkout' %}" class="btn btn-primary w-100">Checkout</a>
+        </div>
+    </div>
+    {% else %}
+    <p>Your cart is empty.</p>
+    {% endif %}
+</div>
+{% endblock %}

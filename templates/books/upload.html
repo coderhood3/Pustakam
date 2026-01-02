@@ -1,0 +1,15 @@
+{% extends 'books/base.html' %}
+{% block content %}
+<div class="container py-8 flex justify-center">
+    <div class="card p-8" style="width: 100%; max-width: 700px;">
+        <h1 class="text-center text-2xl font-bold mb-6">Sell Your Book</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <small class="d-block mb-3 text-light">Hold Ctrl (Windows) or Cmd (Mac) to select multiple images for
+                "Additional Images".</small>
+            <button class="btn btn-primary w-100 mt-4">List Book for Sale</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
